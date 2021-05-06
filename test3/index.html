@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>test3</title>
+</head>
+<body>
+  <p id="info"></p>
+  <script>
+    const url1 = 'http://jsonplaceholder.typicode.com/posts '
+    const url2 = 'https://reqres.in/api/products/3'
+
+    function sendRequest(url) {
+      return new Promise(resolve => {
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', url);
+        xhr.responseType = 'json';
+        xhr.send();
+        xhr.onload = function (data) {
+          if (xhr.status !== 200) {
+            console.log('Error 200')
+          } else {
+            resolve(data.target.response)
+            console.log(data.target.response);
+          }
+        }
+      })
+    }
+
+    Promise.all([sendRequest(url1),sendRequest(url2)]).then(() => {
+      console.log('Два запроса обработаны успешно');
+      const info = document.getElementById('info')
+      info.innerText = 'Два запроса обработаны успешно. Смотри консоль.'
+    });
+  </script>
+</body>
+</html>

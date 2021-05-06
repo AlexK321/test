@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>test4.2</title>
+</head>
+<body>
+  <main>
+    <h2> test4.2 </h2>
+    <p>
+      Hello
+    </p>
+    <div id="message"></div>
+  </main>
+  <script>
+    (function () {
+      const settings = {
+        originDomain: "http://localhost:5000"
+      };
+      const ui = {
+        messageEle: document.getElementById('message'),
+        render: function (data) {
+          console.log(data);
+          this.messageEle.innerHTML = "Полученное сообщение:" + data;
+        }
+      };
+      const _storageAPI = {
+        localSend: function (data) {
+          localStorage.setItem(data.key, data.val);
+          console.log('written');
+          eval(data.callb);
+        },
+        localRemove: function (data) {
+          localStorage.removeItem(data.key);
+          console.log('removed');
+        },
+        localRead: function (data) {
+          let text = localStorage.getItem(data.key);
+          console.log(text);
+        }
+      };
+
+      const app = {
+        _commands: {
+          SEND: (data) => {
+            _storageAPI.localSend(data);
+          },
+          REMOVE: (data) => {
+            _storageAPI.localRemove(data);
+          },
+          READ: (data) => {
+            _storageAPI.localRead(data)
+          },
+        },
+        _receiveMessage: function (e) {
+          if (e.origin !== this._settings.originDomain) {
+            return;
+          }
+          this._ui.render(e.data.color);
+          const action = e.data.action && e.data.action.toUpperCase();
+          if (this._commands[action]) {
+            this._commands[action].call(this, e.data);
+          }
+          e.source.postMessage(e.data.success, e.origin);
+        },
+        init: function (ui, settings, _storageAPI) {
+          this._ui = ui;
+          this._settings = settings;
+          this._storageAPI = _storageAPI;
+          window.addEventListener('message', this._receiveMessage.bind(this));
+        }
+      }
+
+      addEventListener("DOMContentLoaded", function () {
+        app.init(ui, settings, _storageAPI);
+      });
+    })();
+  </script>
+</body>
+</html>

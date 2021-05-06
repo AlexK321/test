@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>test4</title>
+</head>
+<body>
+<main>
+  <h1>test4</h1>
+  <div>
+    <button id="send"> Отправить запись </button>
+    <button id="remove"> Удалить запись </button>
+    <button id="read"> Прочитать запись </button>
+  </div>
+  <iframe id ="receiver" src = "http://localhost:5000/reciever.html" width="700" height="200">
+    <p>XXX</p>
+  </iframe>
+</main>
+<script>
+  addEventListener("DOMContentLoaded", function(){
+    window.addEventListener ('message', function (e) {
+      let message = e.isTrusted;
+    });
+
+    const receiver = document.getElementById('receiver').contentWindow;
+    const send = document.getElementById('send');
+    const remove = document.getElementById('remove');
+    const read = document.getElementById('read');
+    const objMessage = {
+      color: 'xxx',
+      createText: "localStorage.setItem('3','xxx1')"
+    };
+    
+
+    let callbacks = {
+      "sendMessageCallback": function() {alert('send')},
+      "removeCallback": function() {alert('remove')},
+      "readCallback": function() {alert('written')}
+    };
+
+    window.addEventListener('message', function(event) {
+      try {callbacks[event.data]();}
+      catch(error) {
+        console.error("Invalid callback")
+      }
+    });
+
+    function sendMessage(e) {
+      e.preventDefault();
+      objMessage.action = 'send';
+      objMessage.key	= '3';
+      objMessage.val = 'TextForLocalStorage';
+      objMessage.success = "sendMessageCallback";
+      receiver.postMessage(objMessage, 'http://localhost:5000/reciever.html');
+    }
+
+    function removeMessage(e) {
+      e.preventDefault();
+      objMessage.action = 'remove';
+      objMessage.key	= '3';
+      objMessage.val = '';
+      objMessage.success = "removeCallback";
+      receiver.postMessage(objMessage, ' http://localhost:5000/reciever.html');
+    }
+
+    function readMessage(e) {
+      e.preventDefault();
+      objMessage.action = 'read';
+      objMessage.key	= '3';
+      objMessage.val = '';
+      objMessage.success = "readCallback";
+      receiver.postMessage(objMessage, ' http://localhost:5000/reciever.html');
+    }
+    
+    send.addEventListener('click', sendMessage);
+    remove.addEventListener('click', removeMessage);
+    read.addEventListener('click', readMessage);
+  });
+</script>
+</body>
+</html>
