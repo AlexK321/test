@@ -2,7 +2,7 @@ import React from 'react'
 import Main from './components/main/main'
 import Header from './components/header/header'
 import Footer from './components/footer/footer'
-import './App.css';
+import './App.scss';
 
 function App() {
   return (
@@ -13,6 +13,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;

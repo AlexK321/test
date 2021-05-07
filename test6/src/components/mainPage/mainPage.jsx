@@ -3,7 +3,9 @@ import React from 'react'
 function MainPage() {
   return (
     <div>
-      Это главная страница
+      <h1>
+        Это главная страница
+      </h1>
     </div>
   ); 
 }

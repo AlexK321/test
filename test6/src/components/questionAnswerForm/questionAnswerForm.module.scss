@@ -1,0 +1,42 @@
+.container {
+  margin: 0;
+  input {
+    outline: none;
+    height: 35px;
+    background: #ffffff;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    border-radius: 4px;
+    width: 100%;
+    padding-left: 5px;
+  }
+  input:active,
+  input:focus {
+    border-color: #4595f8;
+  }
+  input:disabled {
+    background-color: #f2f5fe;
+  }
+  .error_block {
+    height: 16px;
+    p {
+      color: red;
+      font-size: 11px;
+    }
+  }
+}
+
+@media screen and (min-width: 300px) and (max-width: 580px) {
+  .container {
+    margin: 0 0;
+    input {
+      height: 35px;
+    }
+  }
+  .error_block {
+    p {
+      color: red;
+      font-size: 11px;
+    }
+  }
+}

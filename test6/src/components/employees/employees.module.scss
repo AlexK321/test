@@ -1,0 +1,59 @@
+.btn_container {
+  display: flex;
+  justify-content: space-around;
+  margin: 15px;
+}
+
+$main_color: #673ab7;
+
+.table {
+  width: 700px;
+  margin: 0 auto;
+  border: 2px solid $main_color;
+  border-spacing: 0px;
+  overflow: hidden;
+  caption {
+    font-size: 28px;
+    margin: 15px auto;
+    div {
+      font-size: 20px;
+    }
+  }
+  tr:hover {
+    transition: 1s;
+  }
+  tr:hover {
+    background-color: #d1c4e9;
+    transition: 1s;
+  }
+  td,
+  th {
+    border: 0.5px solid $main_color;
+    padding: 8px 5px;
+    position: relative;
+  }
+  th {
+    border-bottom: 2px solid $main_color;
+  }
+  td:hover::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+  }
+  button {
+    border: unset;
+    background-color: unset;
+    cursor: pointer;
+    transition: 1s;
+    font-weight: bold;
+  }
+  button:hover {
+    background-color: unset;
+    cursor: pointer;
+    background-color: $main_color;
+    transition: 1s;
+    color: white;
+  }
+}
